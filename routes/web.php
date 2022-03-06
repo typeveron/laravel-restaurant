@@ -17,9 +17,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['register'=>false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('category', 'CategoryController');
-Route::resource('food', 'FoodController');
+Route::resource('category', 'CategoryController')->middleware('auth');
+Route::resource('food', 'FoodController')->middleware('auth');
+Route::get('/', 'FoodController@listfood');
+

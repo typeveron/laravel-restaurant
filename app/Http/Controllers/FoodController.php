@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Food;
+use App\Models\Food;
+use App\Models\Category;
 
 class FoodController extends Controller
 {
@@ -14,6 +15,8 @@ class FoodController extends Controller
      */
     public function index()
     {
+        $foods = Food::latest()->paginate(10);
+        return view('food.index', compact('foods'));
         
     }
 
@@ -35,7 +38,26 @@ class FoodController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name'=>'required',
+            'description'=>'required',
+            'price'=>'required',
+            'category'=>'required',
+            'image'=>'required|mimes:png,jpeg,jpg'
+        ]);
+        //store an image
+        $image = $request->file('image');
+        $name= time().'.'.$image->getClientOriginalExtension();
+        $destinationPath = public_path('/images');
+        $image->move($destinationPath, $name);
+        Food::create([
+            'name'=>$request->get('name'),
+            'description'=>$request->get('description'),
+            'price'=>$request->get('price'),
+            'category_id'=>$request->get('category'),
+            'image'=>$name
+        ]);
+        return redirect()->back()->with('message', 'Food created');
     }
 
     /**
@@ -57,7 +79,8 @@ class FoodController extends Controller
      */
     public function edit($id)
     {
-        //
+        $food = Food::find($id);
+        return view('food.edit', compact('food'));
     }
 
     /**
@@ -69,8 +92,34 @@ class FoodController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
+        $this->validate($request, [
+            'name'=>'required',
+            'description'=>'required',
+            'price'=>'required',
+            'category'=>'required',
+            'image'=>'mimes:png,jpeg,jpg'
+        ]);
+
+        //find food to update
+        $food= Food::find($id);
+        //name of image user uploaded
+        $name = $food->image;
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            //name of image in the database
+            $name= time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $image->move($destinationPath, $name);
+        }
+        $food->name = $request->get('name');
+        $food->description = $request->get('description');
+        $food->price = $request->get('price');
+        $food->category_id = $request->get('category');
+        $food->image = $name;
+        $food->save();
+        return redirect()->route('food.index')->with('message', 'Food information updated');
+    }    
 
     /**
      * Remove the specified resource from storage.
@@ -80,6 +129,14 @@ class FoodController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $food = Food::find($id);
+        $food->delete(); 
+        return redirect()->route('food.index')->with('message', 'Food information updated');
+
+    }
+
+    public function listFood() {
+        return $categories = Categories::with('food')->get();
+        return view('food.list',compact('categories'));
     }
 }
