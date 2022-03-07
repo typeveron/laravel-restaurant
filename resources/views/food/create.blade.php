@@ -9,7 +9,7 @@
             {{Session::get('message')}}
             </div>
             @endif
-            <form action="{{route('food.store')}}" method="post" enctype="multipart/form-data">@csrf
+            <form action="{{route('food.store')}}" method="post" enctype='multipart/form-data'>@csrf
             <div class="card">
                 <div class="card-header">Create new food</div>
 
@@ -23,6 +23,7 @@
                         </span>
                     @enderror
                     </div>
+                    <br/>
                     <div class="form-group">
                         <label for="name">Description</label>
                         <textarea class="form-control @error('description') is-invalid @enderror" name="description"></textarea>
@@ -32,6 +33,7 @@
                         </span>
                     @enderror
                     </div>
+                    <br/>
                     <div class="form-group">
                         <label for="name">Price($)</label>
                         <input type="text" name="price" class="form-control @error('price') is-invalid @enderror">
@@ -41,6 +43,7 @@
                         </span>
                     @enderror
                     </div>
+                    <br/>
                     <div class="form-group">
                         <label for="name">Category</label>
                         <select name="category" class="form-control @error('category') is-invalid @enderror">
@@ -57,6 +60,7 @@
                         </span>
                     @enderror
                     </div>
+                    <br/>
                     <div class="form-group">
                         <label for="name">Image</label>
                         <input type="file" name="image" class="form-control @error('image') is-invalid @enderror">
@@ -66,6 +70,7 @@
                         </span>
                     @enderror
                     </div>
+                    <br/>
                     <div class="form-group">
                         <button class="btn btn-outline-primary" type="submit">Submit</button>
                     </div>

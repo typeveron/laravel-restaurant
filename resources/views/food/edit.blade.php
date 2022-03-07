@@ -25,6 +25,7 @@
                         </span>
                     @enderror
                     </div>
+                    <br/>
                     <div class="form-group">
                         <label for="name">Description</label>
                         <textarea class="form-control @error('description') is-invalid @enderror" name="description">
@@ -36,6 +37,7 @@
                         </span>
                     @enderror
                     </div>
+                    <br/>
                     <div class="form-group">
                         <label for="name">Price($)</label>
                         <input type="text" name="price" class="form-control @error('price') is-invalid @enderror"
@@ -46,6 +48,7 @@
                         </span>
                     @enderror
                     </div>
+                    <br/>
                     <div class="form-group">
                         <label for="name">Category</label>
                         <select name="category" class="form-control @error('category') is-invalid @enderror">
@@ -65,6 +68,7 @@
                         </span>
                     @enderror
                     </div>
+                    <br/>
                     <div class="form-group">
                         <label for="name">Image</label>
                         <input type="file" name="image" class="form-control @error('image') is-invalid @enderror">
@@ -74,6 +78,7 @@
                         </span>
                     @enderror
                     </div>
+                    <br/>
                     <div class="form-group">
                         <button class="btn btn-outline-primary" type="submit">Submit</button>
                     </div>
