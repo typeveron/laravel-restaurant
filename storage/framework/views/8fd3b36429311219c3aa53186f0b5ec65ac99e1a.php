@@ -49,6 +49,9 @@
                                 <a class="nav-link" href="<?php echo e(route('food.index')); ?>"><?php echo e(__('Food')); ?></a>
                             </li>
                             <?php if(auth()->guard()->guest()): ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?php echo e(route('login')); ?>"><?php echo e(__('Login')); ?></a>
+                            </li>
 
                             <?php if(Route::has('register')): ?>
                                 <li class="nav-item">
